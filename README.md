@@ -1,4 +1,4 @@
-# better-noteApp
+# betterEditor
 ## 1. 기획
   - 프론트 엔드 교육을 통해 배운 지식을 활용하여 개인 프로젝트를 진행
   - 기간 : 4월 27일 ~ 5월 24일
@@ -6,6 +6,9 @@
   - 예시
    <img width="859" alt="스크린샷 2022-04-25 오전 9 40 57" src="https://user-images.githubusercontent.com/26559739/165003825-0048a1fe-44ba-4796-8d6b-4877046dedde.png">
    
+  - 화면 디자인
+   ![editor화면 디자인](https://user-images.githubusercontent.com/26559739/165198209-48daf113-035f-47e5-aa96-6948909a239b.jpeg)
+
   - MVC 설계 기반으로 개발 진행
   - ESM 이용하여 개발
   - SPA(Single Page Application) 
@@ -31,9 +34,8 @@
       - 순서 리스트, 순서X 리스트 (동그란 점)
       - 하이퍼 링크
       - 이미지 첨부
+      - text 내용 저장 기능
 
     b. 심화기능
-      - text 내용 저장 기능
       - 편집 시 중간에 브라우저를 껐다가 켜도 다시 이어서 편집할 수 있도록 구현
-    
-    c. text 리스트로 출력
+      - localStorage 또는 sessionStorage 사용
