@@ -19,11 +19,8 @@
   - HTML5 boilerplate 사용
 
 ## 3. 설계
-  - 두 가지 경우의 코드 관계도가 나옴
-      - text-editor 일 때 index.html 사용
-      - save 버튼을 눌렀을 때 save.html 사용
   - 다이어그램
-  ![다이어그램](https://user-images.githubusercontent.com/26559739/165206344-0fa62996-a018-4e92-b888-056d240b00ae.png)
+  <img width="537" alt="스크린샷 2022-04-26 오후 5 32 10" src="https://user-images.githubusercontent.com/26559739/165257842-5637ef9f-43fe-46c7-91d5-bd58e48e0a43.png">
   
   - text-editor를 중점적으로 구현
 
