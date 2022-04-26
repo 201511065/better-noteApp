@@ -19,7 +19,12 @@
   - HTML5 boilerplate 사용
 
 ## 3. 설계
-  - 
+  - 두 가지 경우의 코드 관계도가 나옴
+      - text-editor 일 때 index.html 사용
+      - save 버튼을 눌렀을 때 save.html 사용
+  - 다이어그램
+  ![다이어그램](https://user-images.githubusercontent.com/26559739/165206344-0fa62996-a018-4e92-b888-056d240b00ae.png)
+
 
 ## 4. 기능 목록 정리
 
@@ -34,8 +39,9 @@
       - 순서 리스트, 순서X 리스트 (동그란 점)
       - 하이퍼 링크
       - 이미지 첨부
-      - text 내용 저장 기능
-
+      - text 내용 저장 기능 (txt 확장자로 내컴퓨터에 저장)
+      - text 내용 취소 기능
+      
     b. 심화기능
       - 편집 시 중간에 브라우저를 껐다가 켜도 다시 이어서 편집할 수 있도록 구현
       - localStorage 또는 sessionStorage 사용
