@@ -20,7 +20,8 @@
 
 ## 3. 설계
   - 다이어그램
-  <img width="537" alt="스크린샷 2022-04-26 오후 5 32 10" src="https://user-images.githubusercontent.com/26559739/165257842-5637ef9f-43fe-46c7-91d5-bd58e48e0a43.png">
+  <img width="720" alt="스크린샷 2022-05-03 오후 3 00 01" src="https://user-images.githubusercontent.com/26559739/166410397-9b98212f-9752-434a-843b-891082d93f10.png">
+
   
   - text-editor를 중점적으로 구현
 
