@@ -1,9 +1,11 @@
+
 export class EditorView {
 
   constructor() {
-    this.editor = document.getElementById('textField')
+    this.editor = document.getElementById('textField');
     this.buttonAll = document.querySelectorAll('button');
-    this.imgFile = document.getElementById('imgFile')
+    this.imgFile = document.getElementById('imgFile');
+
   }
 
   btnsEdit() {
@@ -23,7 +25,6 @@ export class EditorView {
           case 'unOrderList': this.setStyle('insertUnorderedList'); break;
           case 'link':
             this.addLink()
-              .then(v => console.log(v))
               .catch(e => console.log(e));
             break;
           case 'insertImage': this.setImage(); break;
@@ -31,6 +32,42 @@ export class EditorView {
 
       })
     })
+  }
+
+  get _editorText() {
+    return this.editor.innerHTML;
+  }
+
+  _resetEditor() {
+    this.editor.innerHTML = '';
+  }
+
+  // 실시간 입력 데이터 받아오기
+  inputText(handler) {
+
+    this.editor.addEventListener('keyup', ev => {
+      ev.preventDefault();
+
+      if(this._editorText) {
+        handler({
+          text: this._editorText
+        });
+      }
+    });
+
+  }
+
+  // 데이터 뿌려주기
+  refreshText(handler) {
+
+    document.addEventListener('DOMContentLoaded', evt => {
+      evt.preventDefault();
+
+      if(handler) {
+        this.editor.innerHTML = Object.values(handler);
+      }
+
+    });
   }
 
   // 하이퍼링크 생성
@@ -56,6 +93,7 @@ export class EditorView {
 
   }
 
+  // 이미지 넣기
   setImage() {
 
     this.imgFile.click();
