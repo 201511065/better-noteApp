@@ -11,6 +11,7 @@
   - SPA(Single Page Application) 
   - 프레임워크 사용 X
   - 핵심 비지니스 로직에 대한 unit test 필요
+    - mocha 프레임워크 사용
 
 ## 2. 개발 환경 구성
   - HTML5 boilerplate 사용
