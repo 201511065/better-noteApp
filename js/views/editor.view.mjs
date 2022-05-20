@@ -5,11 +5,12 @@ export class EditorView {
     this.editor = document.getElementById('textField');
     this.buttonAll = document.querySelectorAll('button');
     this.imgFile = document.getElementById('imgFile');
-
   }
 
-  btnsEdit() {
+  btnsEdit(handler) {
+
     this.buttonAll.forEach(value => {
+
       value.addEventListener('click', ev => {
 
         let id = ev.target.closest('button').getAttribute('data-nav-btn');
@@ -24,22 +25,42 @@ export class EditorView {
           case 'orderList': this.setStyle('insertOrderedList'); break;
           case 'unOrderList': this.setStyle('insertUnorderedList'); break;
           case 'link':
-            this.addLink()
-              .catch(e => console.log(e));
+            this.addLink().catch(e => console.log(e));
             break;
-          case 'insertImage': this.setImage(); break;
+          case 'insertImage':
+            this.imgFile.click();
+            this.setImage();
+            break;
         }
 
-      })
-    })
+        // 버튼 눌렀을때 적용된 기능 엔터없이도 바로 저장되기 위함
+        this.saveLocalstorage(handler);
+
+      });
+
+    });
+
   }
 
+  // innerHTML 한 이유 : 새로고침시 버튼 기능까지 유지하려고 (태그까지 들어가야됨)
   get _editorText() {
     return this.editor.innerHTML;
   }
 
+  // 리셋 기능
   _resetEditor() {
     this.editor.innerHTML = '';
+  }
+
+  // 실시간 입력, 버튼 기능 눌렀을 떄에도 적용되기 위함
+  saveLocalstorage(handler) {
+
+    if(this._editorText) {
+      handler({
+        text: this._editorText
+      });
+    }
+
   }
 
   // 실시간 입력 데이터 받아오기
@@ -47,27 +68,29 @@ export class EditorView {
 
     this.editor.addEventListener('keyup', ev => {
       ev.preventDefault();
-
-      if(this._editorText) {
-        handler({
-          text: this._editorText
-        });
-      }
+      this.saveLocalstorage(handler)
     });
 
   }
 
-  // 데이터 뿌려주기
-  refreshText(handler) {
+  // 데이터 렌더링
+  refreshTextEvent(handler) {
 
     document.addEventListener('DOMContentLoaded', evt => {
       evt.preventDefault();
 
-      if(handler) {
-        this.editor.innerHTML = Object.values(handler);
-      }
+      this.refreshText(handler);
 
     });
+  }
+
+  // 데이터 렌더링 분리
+  refreshText(handler) {
+
+    if(handler) {
+      this.editor.innerHTML = Object.values(handler);
+    }
+
   }
 
   // 하이퍼링크 생성
@@ -96,12 +119,11 @@ export class EditorView {
   // 이미지 넣기
   setImage() {
 
-    this.imgFile.click();
-
     this.imgFile.addEventListener('change', ev => {
+
       const files = ev.currentTarget.files;
 
-      if(files) {
+      if(!!files) {
         this.insertImgData(files[0]);
       }
 
@@ -110,6 +132,7 @@ export class EditorView {
   }
 
   insertImgData(file) {
+
     const reader = new FileReader();
 
     reader.addEventListener('load', ev => {
@@ -118,11 +141,15 @@ export class EditorView {
     });
 
     reader.readAsDataURL(file);
+
   }
 
   setStyle(style) {
+
     document.execCommand(style);
+
     this.focusEditor();
+
   }
 
   // 에디터에서 포커스 날아가는것을 방지
