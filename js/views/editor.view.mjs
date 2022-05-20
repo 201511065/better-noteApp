@@ -52,6 +52,16 @@ export class EditorView {
     this.editor.innerHTML = '';
   }
 
+  // 실시간 입력 데이터 받아오기
+  inputText(handler) {
+
+    this.editor.addEventListener('keyup', ev => {
+      ev.preventDefault();
+      this.saveLocalstorage(handler)
+    });
+
+  }
+
   // 실시간 입력, 버튼 기능 눌렀을 떄에도 적용되기 위함
   saveLocalstorage(handler) {
 
@@ -63,25 +73,14 @@ export class EditorView {
 
   }
 
-  // 실시간 입력 데이터 받아오기
-  inputText(handler) {
-
-    this.editor.addEventListener('keyup', ev => {
-      ev.preventDefault();
-      this.saveLocalstorage(handler)
-    });
-
-  }
-
   // 데이터 렌더링
   refreshTextEvent(handler) {
 
     document.addEventListener('DOMContentLoaded', evt => {
       evt.preventDefault();
-
       this.refreshText(handler);
-
     });
+
   }
 
   // 데이터 렌더링 분리
