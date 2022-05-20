@@ -127,20 +127,28 @@ export class EditorView {
         this.insertImgData(files[0]);
       }
 
+      // 같은 이미지 넣을수 있도록
+      // 이미지 넣을수록 계속 증가됨을 방지 초기화
+      ev.target.value = '';
+
     });
 
   }
 
   insertImgData(file) {
 
-    const reader = new FileReader();
+    if(file) {
 
-    reader.addEventListener('load', ev => {
-      this.focusEditor();
-      document.execCommand('insertImage', false, `${reader.result}`);
-    });
+      const reader = new FileReader();
 
-    reader.readAsDataURL(file);
+      reader.addEventListener('load', ev => {
+        this.focusEditor();
+        document.execCommand('insertImage', false, `${reader.result}`);
+      });
+
+      reader.readAsDataURL(file);
+
+    }
 
   }
 

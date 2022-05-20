@@ -40,6 +40,6 @@ button {
   display: none;
 }
 
-#textField > img {
-  max-width: 80%;
+#textField img {
+  max-width: 100%;
 }
