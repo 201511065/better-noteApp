@@ -1,104 +1,73 @@
-import {EditorServiceTest} from "./services/editor.serviceTest.mjs";
-import {EditorViewTest} from "./views/editor.viewTest.mjs";
-import {EditorControllerTest} from "./controllers/editor.controllerTest.mjs";
+import {EditorService} from "../../js/services/editor.service.mjs";
 import assert from "assert";
-import jsdom from "mocha-jsdom"
 
-const testText = {
-  text: "<div><i>하이하이</i></div>"
-};
+const document = {
+  para: ['sdffef', 'fsfkej', 'fbkjew', 'kgjs', 'wekrjwelk', 'dfsdfef', 'cvkjs', 'wekrjwl', 'sfdfef', 'wfdfds', 'dfsdfw', 'sdfsdf', 'werdf', 'vbvbfdg', 'wesdsfs', 'vcbc', 'sdffsf', 'sdfefdfs', 'wfewef', 'www.naver.com'],
+  bold: [[8, 0, 5], [17, 0, 7]],
+  italic: [[0, 0, 5], [5, 0, 6], [12, 0, 2], [18, 0, 5]],
+  underLine: [[4, 0, 8], [9, 0, 5], [16, 0, 5]],
+  orderList: [[1, 3], [6, 7]],
+  unOrderList: [[10, 11], [13, 15]],
+  leftAlign: [17, 18],
+  rightAlign: [12],
+  centerAlign: [16],
+  link: [[19, 'https://www.naver.com']],
+  img: []
+}
 
-const main = new EditorControllerTest(new EditorServiceTest(), new EditorViewTest());
-const s = new EditorServiceTest();
-const v = new EditorViewTest();
+const paraArray = ['right;">?????', 'center;">hihihi', 'm<b>yname</b>', '<b>is</b>',
+  '<ol><li>chae na eun', 'wer', 'ssss</li></ol>', 'right;\"><i>mungga</i>', 'd<u>ltkddltkd</u>',
+  '<ul><li>dltksgksep</li></ul>', 'center;">dhodlfjsmsrjdi', '<i>wpqkfdlfjwlak</i>',
+  "<a href=\"https://www.naver.com\">www.naver.com</a>"];
 
-describe("text를 저장한다.", () => {
+const s = new EditorService();
 
-  it("바로 model에 testText를 저장한다", () => {
+describe("인덱스를 제대로 저장하는지 확인한다.", (done) => {
 
-    s.addTextToModelTest(testText);
+  it("숫자로 정렬된 리스트는 4번째 인덱스부터 6번째 인덱스까지 적용되어 있다.", (done) => {
+      let arr = s.indexToList(paraArray, 'ol');
+      assert.deepEqual(arr, [[4,6]]);
 
-    assert.equal(s.getModelTextTest(), testText.text);
+      done();
+  });
 
+  it("오른쪽 정렬된 문자열은 0번째와 7번째 문자열이다", (done) => {
+    let arr = s.indexToAlign(paraArray, 'right');
+    assert.deepEqual(arr, [0,7]);
+
+    done();
+  });
+
+  it("링크는 14번째 인덱스와 네이버 주소가 들어가있다.", (done) => {
+    let arr = s.indexToLink(paraArray);
+    assert.deepEqual(arr, [[12, 'https://www.naver.com']]);
+
+    done();
+  });
+
+  it("bold, italic, underline 을 같은 메서드로 보냈을때 제대로 인덱스를 뽑아낸다.", (done) => {
+    let boldArr = s.indexToBIU(paraArray, 'b');
+    assert.deepEqual(boldArr, [[ 2, 1, 5 ], [ 3, 0, 1 ]]);
+
+    let italicArr = s.indexToBIU(paraArray, 'i');
+    assert.deepEqual(italicArr, [[7, 0, 5], [11, 0, 12]]);
+
+    let underlineArr = s.indexToBIU(paraArray, 'u');
+    assert.deepEqual(underlineArr, [[8, 1, 9]]);
+
+    done();
   })
 
-  it("컨트롤러를 통해서 view의 saveLocalstorage가 제대로 작동하는지 확인한다.", () => {
-
-    main.setTest();
-
-    assert.equal(main.getTest(), "<div><b>채나은 테스트</b></div>")
-
-  })
+  done;
 
 })
 
-describe("text가 제대로 렌더링 되는지 확인한다", () => {
+describe("렌더링이 제대로 되는지 확인한다.", () => {
 
-  it("모델에 데이터를 저장하고 렌더링 시킨 후 모델의 데이터와 같은지 확인한다.", (done) => {
-    try {
-      // this.editor 내용을 모델에 저장
-      main.setTest();
+  it("링크 렌더링이 제대로 되는지 확인한다", () => {
 
-      // 테스트에 있는 가짜 데이터를 모델에 저장
-      main.setText(testText);
-
-      // 데이터 렌더링
-      main.renderingTest();
-
-      // 에러나는게 맞음
-      assert.equal(main.getTest(), v._editorText);
-      done();
-    }
-    catch (e) {
-      done(e);
-    }
-  });
-
-})
-
-
-
-global.document = jsdom({url: "http://localhost"});
-
-global.localStorage = {
-  data: {},
-  setItem(key, value) {
-    this.data[key] = value;
-  },
-  getItem(key) {
-    return this.data[key];
-  },
-  removeItem(key) {
-    return this.data[key];
-  }
-};
-
-
-describe('가상 dom sample Test', function() {
-
-  it("div element 가 존재할것이다", (done) => {
-    try {
-      let div = document.createElement('div');
-      assert.equal(true, div != null);
-      done();
-    }
-    catch (e) {
-      done(e);
-    }
-
-  });
-
-});
-
-describe("가상 로컬스토리지에 저장한다.", () => {
-
-  global.localStorage.setItem("text","<div>반갑습니다.</div>");
-
-  it("로컬스토리지에 text가 저장되었다. ", () => {
-
-    let text = global.localStorage.getItem("text");
-    console.log(text);
-    assert.equal(text, "<div>반갑습니다.</div>")
+    // v.refreshText(document);
 
   })
+
 })

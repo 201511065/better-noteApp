@@ -4,9 +4,10 @@ export class EditorController {
     this.editorService = editorService;
     this.editorView = editorView;
 
-    this.editorView.btnsEdit(this.setText);
-
-    this.editorView.inputText(this.setText);
+    this.editorView.bindBtnsEdit(this.handleBtnsEdit);
+    this.editorView.inputDocument(this.setText, this.handelIndexBIU,
+      this.handleIndexList, this.handleIndexAlign
+    , this.handleIndexLink);
     this.editorView.refreshTextEvent(this.getText());
 
   }
@@ -20,6 +21,45 @@ export class EditorController {
   getText() {
     return this.editorService.getModelText();
   }
+
+  handleBtnsEdit = id => {
+    return this.editorService.btnsEdit(id);
+  }
+
+  handelIndexBIU = (paraArray, tag) => {
+    return this.editorService.indexToBIU(paraArray, tag);
+  }
+
+  handleIndexList = (paraArray, tag) => {
+    return this.editorService.indexToList(paraArray, tag);
+  }
+
+  handleIndexAlign = (paraArray, align) => {
+    return this.editorService.indexToAlign(paraArray, align);
+  }
+
+  handleIndexLink = paraArray => {
+    return this.editorService.indexToLink(paraArray);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
