@@ -33,18 +33,18 @@
       - 텍스트 언더라인(Underline)
       - 순서 리스트, 순서X 리스트 (동그란 점)
       - 하이퍼 링크
-      - 이미지 첨부
 
     b. 심화기능
       - 편집 시 중간에 브라우저를 껐다가 켜도 다시 이어서 편집할 수 있도록 구현
       - localStorage 사용
 
 ## 5. Usage
-  1. 구동 전 필요한 절차
-     1. npm install 를 반드시 진행해주세요.
-     2. index.html 에서 실행하시면 됩니다.
-  2. Unit Test 실행 방법
-     1. editorTest.mjs 에서 Unit Test를 진행할 수 있습니다.
-     2. describe 안에 it 이 개별 테스트입니다.
-        1. 한꺼번에 돌리고 싶을때는 describe를 테스트하고
-        2. 개별로 돌리고 싶을떄는 it을 테스트하면 됩니다.
+
+1. 구동 전 필요한 절차
+   1. npm install
+2. Unit Test 실행 방법
+   1. npm install --global mocha
+   2. npm install mocha --save-dev
+   3. npm test
+   4. test 파일의 editorTest 에서 테스트 진행
+
