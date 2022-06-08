@@ -8,7 +8,7 @@ export class EditorController {
     this.editorView.inputDocument(this.setText, this.handelIndexBIU,
       this.handleIndexList, this.handleIndexAlign
     , this.handleIndexLink);
-    this.editorView.refreshTextEvent(this.getText());
+    this.editorView.renderingTextEvent(this.getText());
 
   }
 
@@ -42,6 +42,13 @@ export class EditorController {
     return this.editorService.indexToLink(paraArray);
   }
 
+  handleRenderingAlign = (text, div, p) => {
+    return this.editorService.renderingAlign(text, div, p);
+  }
+
+  handleRenderingLink = (text, div, p, a) => {
+    return this.editorService.renderingLink(text, div, p, a);
+  }
 
 
 
