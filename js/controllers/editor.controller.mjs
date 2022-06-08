@@ -1,0 +1,54 @@
+export class EditorController {
+
+  constructor(editorService, editorView) {
+    this.editorService = editorService;
+    this.editorView = editorView;
+
+    this.editorView.bindBtnsEdit(this.handleBtnsEdit);
+    this.editorView.inputDocument(this.setText, this.handelIndexBIU,
+      this.handleIndexList, this.handleIndexAlign
+      , this.handleIndexLink);
+    this.editorView.renderingTextEvent(this.getText());
+
+  }
+
+  // 실시간 문자 받아서 모델, 로컬스토리지에 저장하기
+  setText = text => {
+    this.editorService.addTextToModel(text);
+  }
+
+  // 값 가져오기
+  getText() {
+    return this.editorService.getModelText();
+  }
+
+  handleBtnsEdit = id => {
+    return this.editorService.btnsEdit(id);
+  }
+
+  handelIndexBIU = (paraArray, tag) => {
+    return this.editorService.indexToBIU(paraArray, tag);
+  }
+
+  handleIndexList = (paraArray, tag) => {
+    return this.editorService.indexToList(paraArray, tag);
+  }
+
+  handleIndexAlign = (paraArray, align) => {
+    return this.editorService.indexToAlign(paraArray, align);
+  }
+
+  handleIndexLink = paraArray => {
+    return this.editorService.indexToLink(paraArray);
+  }
+
+  handleRenderingAlign = (text, div, p) => {
+    return this.editorService.renderingAlign(text, div, p);
+  }
+
+  handleRenderingLink = (text, div, p, a) => {
+    return this.editorService.renderingLink(text, div, p, a);
+  }
+
+
+}

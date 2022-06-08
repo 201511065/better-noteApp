@@ -13,7 +13,7 @@
   background: #ff6e6c;
 }
 
-.btns img{
+button > img{
   height: 30px;
 }
 
@@ -25,4 +25,21 @@
   background: #ff6e6c;
   height: 600px;
   width: 80%;
+  border: solid 1px;
+  overflow: auto;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: #ff6e6c;
+}
+
+#imgFile {
+  display: none;
+}
+
+#textField img {
+  max-width: 100%;
 }
