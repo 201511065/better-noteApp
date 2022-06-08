@@ -7,7 +7,7 @@ export class EditorController {
     this.editorView.bindBtnsEdit(this.handleBtnsEdit);
     this.editorView.inputDocument(this.setText, this.handelIndexBIU,
       this.handleIndexList, this.handleIndexAlign
-    , this.handleIndexLink);
+      , this.handleIndexLink);
     this.editorView.renderingTextEvent(this.getText());
 
   }
@@ -49,24 +49,6 @@ export class EditorController {
   handleRenderingLink = (text, div, p, a) => {
     return this.editorService.renderingLink(text, div, p, a);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -199,7 +199,7 @@ export class EditorView {
 
     document.addEventListener('DOMContentLoaded', evt => {
       evt.preventDefault();
-      this.refreshText(handler);
+      this.renderingText(handler);
       this.clickLink();
     });
 
@@ -207,7 +207,7 @@ export class EditorView {
 
   // 데이터 렌더링 분리
   // display 해주기
-  refreshText(text) {
+  renderingText(text) {
     let div = '';
 
     if(text) {

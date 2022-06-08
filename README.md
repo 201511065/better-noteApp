@@ -47,7 +47,7 @@ graph TD;
 1. 구동 전 필요한 절차
 ```
 npm install
-
+npm run bulid
 npm run dev
 ```
 3. Unit Test 실행 방법

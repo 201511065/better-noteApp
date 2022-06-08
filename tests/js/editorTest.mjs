@@ -20,6 +20,8 @@ const paraArray = ['right;">?????', 'center;">hihihi', 'm<b>yname</b>', '<b>is</
   '<ul><li>dltksgksep</li></ul>', 'center;">dhodlfjsmsrjdi', '<i>wpqkfdlfjwlak</i>',
   "<a href=\"https://www.naver.com\">www.naver.com</a>"];
 
+const paraArray2 = ['<b>1234567890</b>', '1<i>234567890</i><br>', '<u>1234567</u>890<br>', 'center;">1234567890<br>', 'center;">1234567890<br>', 'right;">1234567890<br>', '<ol><li>1234567890', '1234567890</li></ol><ul><li><span style="font-size: 1.5rem;">1234567890</span>', '1234567890', '1234567890</li></ul>', '<a href="https://www.naver.com">1234567890</a>', '12<b>345678</b>90<br>'];
+
 const s = new EditorService();
 
 describe("인덱스를 제대로 저장하는지 확인한다.", (done) => {
@@ -66,8 +68,7 @@ describe("렌더링이 제대로 되는지 확인한다.", () => {
 
   it("링크 렌더링이 제대로 되는지 확인한다", () => {
 
-    // v.refreshText(document);
-
+    s.refreshText()
   })
 
 })
