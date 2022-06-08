@@ -195,7 +195,7 @@ export class EditorView {
   }
 
   // 데이터 렌더링
-  refreshTextEvent(handler) {
+  renderingTextEvent(handler) {
 
     document.addEventListener('DOMContentLoaded', evt => {
       evt.preventDefault();
