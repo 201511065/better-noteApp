@@ -33,22 +33,22 @@ export class EditorView {
     this.linkButton = this.createElement('button', 'link');
     this.linkButton.append(this.createElement('img', false, './img/link.png'));
 
-    this.insertImageButton = this.createElement('button', 'insertImage');
-    this.insertImageButton.append(this.createElement('img', false, './img/image.png'));
+    // this.insertImageButton = this.createElement('button', 'insertImage');
+    // this.insertImageButton.append(this.createElement('img', false, './img/image.png'));
 
-    this.createInput({
-      key: 'imgFile',
-      id: 'imgFile',
-      type: 'file',
-      accept: 'image/*'
-    })
+    // this.createInput({
+    //   key: 'imgFile',
+    //   id: 'imgFile',
+    //   type: 'file',
+    //   accept: 'image/*'
+    // })
 
     this.editor = this.createElement('div', 'textField', false);
     this.editor.contentEditable = true;
 
     this.btns.append(this.leftButton, this.centerButton, this.rightButton, this.boldButton
-                    , this.italicButton, this.underlineButton, this.orderListButton, this.unOrderListButton,this.linkButton
-                    , this.insertImageButton, this.imgFile);
+                    , this.italicButton, this.underlineButton, this.orderListButton, this.unOrderListButton,this.linkButton);
+                    //, this.insertImageButton, this.imgFile
 
     this.app.append(this.btns, this.editor);
 
@@ -64,7 +64,7 @@ export class EditorView {
     this.rightAlign = [];
     this.centerAlign = [];
     this.link = [];
-    this.img = [];
+    //this.img = [];
 
   }
 
@@ -108,10 +108,10 @@ export class EditorView {
         if (handler(id) === 'link') {
           this.addLink().catch(e => console.log(e));
         }
-        if (handler(id) === 'insertImage') {
-          this.imgFile.click();
-          this.setImage();
-        }
+        // if (handler(id) === 'insertImage') {
+        //   this.imgFile.click();
+        //   this.setImage();
+        // }
         this.setStyle(handler(id));
 
       });
@@ -144,7 +144,10 @@ export class EditorView {
   get paraArrayToTag() {
     return this.editor.innerHTML.replaceAll("</div>", "")
       .replaceAll('<div style="text-align: ', "<div>")
-      .replaceAll("</li><li>", "<div>").split("<div>")
+      .replaceAll("</li><li>", "<div>")
+      .replaceAll("<body>", "")
+      .replaceAll("</body>", "")
+      .split("<div>")
   }
 
   inputDocument(handler, biuHandler
@@ -195,266 +198,15 @@ export class EditorView {
   }
 
   // 데이터 렌더링
-  renderingTextEvent(handler) {
+  renderingText(handler) {
 
     document.addEventListener('DOMContentLoaded', evt => {
       evt.preventDefault();
-      this.renderingText(handler);
+      let doc = new DOMParser().parseFromString(handler, "text/html");
+
+      this.editor.append(doc.body)
       this.clickLink();
     });
-
-  }
-
-  // 데이터 렌더링 분리
-  // display 해주기
-  renderingText(text) {
-    let div = '';
-
-    if(text) {
-
-      loop : for (let p=0; p<text._para.length; p++) {
-
-        div = this.createElement('div');
-
-        div = this.renderingAlign(text, div, p);
-        div = this.renderingLink(text, div, p);
-        div = this.renderingList(text, div, p);
-        div = this.renderingBIU(text, div, p);
-
-        // 리스트는 한 div안에서 한꺼번에 처리해주기 때문에 처리된 para index는 넘어가기
-        for (let i=0; i<text._orderList.length; i++) {
-
-          if (text._orderList[i][0] < p && p <= text._orderList[i][1]) {
-            continue loop;
-          }
-
-        }
-
-        for (let i=0; i<text._unOrderList.length; i++) {
-
-          if (text._unOrderList[i][0] < p && p <= text._unOrderList[i][1]) {
-            continue loop;
-          }
-
-        }
-
-        // 태그 따로 없을 때
-        if(div.innerText === '') {
-          div.append(text._para[p]);
-        }
-
-        this.editor.append(div);
-
-      }
-
-    }
-
-  }
-
-  // 왼, 오, 가운데 정렬 렌더링
-  renderingAlign(text, div, p) {
-
-    let leftNum = -1;
-    let rightNum = -1;
-    let centerNum = -1;
-
-    for(let i=0; i<text._leftAlign.length; i++) {
-      if(text._leftAlign[i] === p) {
-        leftNum = i;
-        break;
-      }
-    }
-
-    for(let i=0; i<text._rightAlign.length; i++) {
-      if(text._rightAlign[i] === p) {
-        rightNum = i;
-        break;
-      }
-    }
-
-    for(let i=0; i<text._centerAlign.length; i++) {
-      if(text._centerAlign[i] === p) {
-        centerNum = i;
-        break;
-      }
-    }
-
-    // 왼, 오, 가 정렬 스타일 적용
-    if (rightNum > -1) {
-      div.style.textAlign = "right"
-    }
-    else if (centerNum > -1) {
-      div.style.textAlign = "center"
-    }
-    else if (leftNum > -1) {
-      div.style.textAlign = "left"
-    }
-
-    return div;
-
-  }
-
-  // 링크 렌더링
-  renderingLink(text, div, p) {
-    let linkNum = -1;
-
-    for(let i=0; i<text._link.length; i++) {
-      if(text._link[i][0] === p) {
-        linkNum = i;
-        break;
-      }
-    }
-
-    if (linkNum > -1) {
-
-      let a = this.createElement('a');
-      a.href = text._link[linkNum][1];
-
-      a.append(text._para[p]);
-
-      div.append(a);
-
-    }
-
-    return div;
-
-  }
-
-  // 리스트 렌더링
-  renderingList(text, div, p) {
-
-    let orderNum = -1;
-    let unOrderNum = -1;
-
-    for(let i=0; i<text._orderList.length; i++) {
-      if(text._orderList[i][0] === p) {
-        orderNum = i;
-        break;
-      }
-    }
-
-    for(let i=0; i<text._unOrderList.length; i++) {
-      if(text._unOrderList[i][0] === p) {
-        unOrderNum = i;
-        break;
-      }
-    }
-
-    // 리스트 두개 넣기
-    // 다음 문자열로 넘어갈 때 태그가 없는것으로 판단되어 한번 더 들어감
-    if (orderNum > -1) {
-      let ol = this.createElement('ol');
-
-      for (let i = p; i <= text._orderList[orderNum][1]; i++) {
-        let li = this.createElement('li');
-        li.append(text._para[i]);
-        ol.append(li);
-      }
-
-      div.append(ol);
-
-    }
-
-    if (unOrderNum > -1) {
-      let ul = this.createElement('ul');
-
-      for (let i = p; i <= text._unOrderList[unOrderNum][1]; i++) {
-        let li = this.createElement('li');
-        li.append(text._para[i]);
-        ul.append(li);
-      }
-
-      div.append(ul);
-
-    }
-
-    return div;
-
-  }
-
-  // 굵게, 기울기, 언더라인 렌더링
-  renderingBIU(text, div, p) {
-
-    let iNum = -1;
-    let bNum = -1;
-    let uNum = -1;
-
-    // 각각의 버튼 기능이 있는 문자열 인덱스 찾기
-    for(let i=0; i<text._bold.length; i++) {
-      if(text._bold[i][0] === p) {
-        bNum = i;
-        break;
-      }
-    }
-
-    for(let i=0; i<text._italic.length; i++) {
-      if(text._italic[i][0] === p) {
-        iNum = i;
-        break;
-      }
-    }
-
-    for(let i=0; i<text._underLine.length; i++) {
-      if(text._underLine[i][0] === p) {
-        uNum = i;
-        break;
-      }
-    }
-
-    // bold 만 있다는 뜻
-    if (bNum > -1) {
-
-      div = this.renderingBIUTag(text._para, text._bold, div, p, bNum, 'b')
-
-    }
-    // italic 만 있다는 뜻
-    if (iNum > -1) {
-
-      div = this.renderingBIUTag(text._para, text._italic, div, p, iNum, 'i')
-
-    }
-
-    if (uNum > -1) {
-
-      div = this.renderingBIUTag(text._para, text._underLine, div, p, uNum, 'u')
-
-    }
-
-    return div;
-
-  }
-
-  renderingBIUTag(para, text, div, p, num, tag) {
-
-    let s = this.createElement(tag);
-    let str = '';
-    let biuStr = '';
-
-    for (let k = 0; k < para[p].length; k++) {
-
-      if (k !== text[num][1]) {
-        str = para[p].charAt(k);
-        div.append(str);
-        str = '';
-      }
-      else {
-
-        for (let t = k; t<= text[num][2]; t++) {
-          biuStr += para[p].charAt(t);
-        }
-
-        s.append(biuStr);
-        div.append(s);
-
-        s = '';
-        biuStr = '';
-        k = text[num][2];
-
-      }
-
-    }
-
-    return div;
 
   }
 
