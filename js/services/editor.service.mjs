@@ -3,11 +3,9 @@ import {DocumentModel} from "../models/document.model.mjs";
 export class EditorService {
   constructor() {
     const ts = JSON.parse(localStorage.getItem('_document')) || [];
-    if (ts.length !== 0) {
-      this.model = new DocumentModel(ts._para, ts._bold, ts._italic, ts._underLine,
-                                    ts._leftAlign, ts._rightAlign, ts._centerAlign,
-                                    ts._orderList, ts._unOrderList, ts._link);
-    }
+    this.model = new DocumentModel(ts._para, ts._bold, ts._italic, ts._underLine,
+                                  ts._leftAlign, ts._rightAlign, ts._centerAlign,
+                                  ts._orderList, ts._unOrderList, ts._link);
 
     //this.model = new DocumentModel();
   }
@@ -19,7 +17,6 @@ export class EditorService {
 
   // 모델에 저장
   addTextToModel(ts) {
-    console.log(ts);
     this.model.bold = ts.document.bold;
     this.model.para = ts.document.para;
     this.model.italic = ts.document.italic;
@@ -37,35 +34,37 @@ export class EditorService {
   // 모델에 저장된 text 가져오기
   getModelText() {
 
-    if (this.model._bold === undefined) {
-      this.model._bold = [];
+    if (this.model.para === undefined) {
+      this.model.para = [];
     }
-    if (this.model._italic === undefined) {
-      this.model._italic = [];
+    if (this.model.bold === undefined) {
+      this.model.bold = [];
     }
-    if (this.model._underLine === undefined) {
-      this.model._underLine = [];
+    if (this.model.italic === undefined) {
+      this.model.italic = [];
     }
-    if (this.model._leftAlign === undefined) {
-      this.model._leftAlign = [];
+    if (this.model.underLine === undefined) {
+      this.model.underLine = [];
     }
-    if (this.model._rightAlign === undefined) {
-      this.model._rightAlign = [];
+    if (this.model.leftAlign === undefined) {
+      this.model.leftAlign = [];
     }
-    if (this.model._centerAlign === undefined) {
-      this.model._centerAlign = [];
+    if (this.model.rightAlign === undefined) {
+      this.model.rightAlign = [];
     }
-    if (this.model._orderList === undefined) {
-      this.model._orderList = [];
+    if (this.model.centerAlign === undefined) {
+      this.model.centerAlign = [];
     }
-    if (this.model._unOrderList === undefined) {
-      this.model._unOrderList = [];
+    if (this.model.orderList === undefined) {
+      this.model.orderList = [];
     }
-    if (this.model._link === undefined) {
-      this.model._link = [];
+    if (this.model.unOrderList === undefined) {
+      this.model.unOrderList = [];
+    }
+    if (this.model.link === undefined) {
+      this.model.link = [];
     }
 
-    console.log(this.model);
     return this.model;
     //console.log(JSON.parse(localStorage.getItem('_document')));
     //return JSON.parse(localStorage.getItem('_document'));
