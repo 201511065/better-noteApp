@@ -8,13 +8,17 @@ export class EditorController {
     this.editorView.inputDocument(this.setText, this.handelIndexBIU,
       this.handleIndexList, this.handleIndexAlign
       , this.handleIndexLink);
-    this.editorView.renderingTextEvent(this.getText());
-
+    //this.editorView.renderingTextEvent(this.getText());
+    this.editorView.renderingText(this.handleRendering());
   }
 
   // 실시간 문자 받아서 모델, 로컬스토리지에 저장하기
   setText = text => {
     this.editorService.addTextToModel(text);
+  }
+
+  handleRendering() {
+    return this.editorService.rendering()
   }
 
   // 값 가져오기
@@ -41,14 +45,5 @@ export class EditorController {
   handleIndexLink = paraArray => {
     return this.editorService.indexToLink(paraArray);
   }
-
-  handleRenderingAlign = (text, div, p) => {
-    return this.editorService.renderingAlign(text, div, p);
-  }
-
-  handleRenderingLink = (text, div, p, a) => {
-    return this.editorService.renderingLink(text, div, p, a);
-  }
-
 
 }
