@@ -1,13 +1,18 @@
 import {DocumentModel} from "../models/document.model.mjs";
 
 export class EditorService {
-  constructor() {
-    const ts = JSON.parse(localStorage.getItem('_document')) || [];
-    this.model = new DocumentModel(ts._para, ts._bold, ts._italic, ts._underLine,
-      ts._leftAlign, ts._rightAlign, ts._centerAlign,
-      ts._orderList, ts._unOrderList, ts._link);
+  constructor(documentData) {
+    let document;
+    if (documentData) {
+      document = documentData
+    } else {
+      document = JSON.parse(localStorage.getItem('_document')) || [];
+    }
 
-    //this.model = new DocumentModel();
+    this.model = new DocumentModel(document._para, document._bold, document._italic, document._underLine,
+      document._leftAlign, document._rightAlign, document._centerAlign,
+      document._orderList, document._unOrderList, document._link);
+
   }
 
   // 로컬스토리지에 저장

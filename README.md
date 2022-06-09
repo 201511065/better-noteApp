@@ -57,10 +57,7 @@ npm run dev
 ```
 3. Unit Test 실행 방법
 ```
-- 생성자함수에 로컬스토리지가 있을 경우 테스트가 안됨
-- editor.service.mjs 의 constructor 에 localStorage부분(5-8행까지) 주석 처리 후
-  this.model = new DocumentModel() 주석 제거
-
+// 유닛 테스트 실행
 npm test
 
 ```
