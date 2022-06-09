@@ -4,8 +4,8 @@ export class EditorService {
   constructor() {
     const ts = JSON.parse(localStorage.getItem('_document')) || [];
     this.model = new DocumentModel(ts._para, ts._bold, ts._italic, ts._underLine,
-                                  ts._leftAlign, ts._rightAlign, ts._centerAlign,
-                                  ts._orderList, ts._unOrderList, ts._link);
+      ts._leftAlign, ts._rightAlign, ts._centerAlign,
+      ts._orderList, ts._unOrderList, ts._link);
 
     //this.model = new DocumentModel();
   }
@@ -69,7 +69,7 @@ export class EditorService {
 
     if (this.model) {
 
-      loop : for (let p=0; p<this.model.para.length; p++) {
+      loop : for (let p = 0; p < this.model.para.length; p++) {
 
         div = this.renderingAlign(div, p);
         div += this.renderingBIU(p);
@@ -77,7 +77,7 @@ export class EditorService {
         div += this.renderingList(p);
 
         // 리스트는 한 div안에서 한꺼번에 처리해주기 때문에 처리된 para index는 넘어가기
-        for (let i=0; i<this.model.orderList.length; i++) {
+        for (let i = 0; i < this.model.orderList.length; i++) {
 
           if (this.model.orderList[i][0] < p && p <= this.model.orderList[i][1]) {
             continue loop;
@@ -85,7 +85,7 @@ export class EditorService {
 
         }
 
-        for (let i=0; i<this.model.unOrderList.length; i++) {
+        for (let i = 0; i < this.model.unOrderList.length; i++) {
 
           if (this.model.unOrderList[i][0] < p && p <= this.model.unOrderList[i][1]) {
             continue loop;
@@ -94,9 +94,8 @@ export class EditorService {
         }
 
         if (div === "<div>" || div === '<div style=\"text-align: right;\">'
-        || div === '<div style=\"text-align: left;\">'
-        || div=== '<div style=\"text-align: center;\">')
-        {
+          || div === '<div style=\"text-align: left;\">'
+          || div === '<div style=\"text-align: center;\">') {
           div += this.model.para[p];
         }
 
@@ -120,22 +119,22 @@ export class EditorService {
     let rightNum = -1;
     let centerNum = -1;
 
-    for(let i=0; i<this.model.leftAlign.length; i++) {
-      if(this.model.leftAlign[i] === p) {
+    for (let i = 0; i < this.model.leftAlign.length; i++) {
+      if (this.model.leftAlign[i] === p) {
         leftNum = i;
         break;
       }
     }
 
-    for(let i=0; i<this.model.rightAlign.length; i++) {
-      if(this.model.rightAlign[i] === p) {
+    for (let i = 0; i < this.model.rightAlign.length; i++) {
+      if (this.model.rightAlign[i] === p) {
         rightNum = i;
         break;
       }
     }
 
-    for(let i=0; i<this.model.centerAlign.length; i++) {
-      if(this.model.centerAlign[i] === p) {
+    for (let i = 0; i < this.model.centerAlign.length; i++) {
+      if (this.model.centerAlign[i] === p) {
         centerNum = i;
         break;
       }
@@ -144,14 +143,11 @@ export class EditorService {
     // 왼, 오, 가 정렬 스타일 적용
     if (rightNum > -1) {
       div = '<div style=\"text-align: right;\">'
-    }
-    else if (centerNum > -1) {
+    } else if (centerNum > -1) {
       div = '<div style=\"text-align: center;\">'
-    }
-    else if (leftNum > -1) {
+    } else if (leftNum > -1) {
       div = '<div style=\"text-align: left;\">'
-    }
-    else {
+    } else {
       div = '<div>'
     }
 
@@ -167,22 +163,22 @@ export class EditorService {
     let uNum = -1;
 
     // 각각의 버튼 기능이 있는 문자열 인덱스 찾기
-    for(let i=0; i<this.model.bold.length; i++) {
-      if(this.model.bold[i][0] === p) {
+    for (let i = 0; i < this.model.bold.length; i++) {
+      if (this.model.bold[i][0] === p) {
         bNum = i;
         break;
       }
     }
 
-    for(let i=0; i<this.model.italic.length; i++) {
-      if(this.model.italic[i][0] === p) {
+    for (let i = 0; i < this.model.italic.length; i++) {
+      if (this.model.italic[i][0] === p) {
         iNum = i;
         break;
       }
     }
 
-    for(let i=0; i<this.model.underLine.length; i++) {
-      if(this.model.underLine[i][0] === p) {
+    for (let i = 0; i < this.model.underLine.length; i++) {
+      if (this.model.underLine[i][0] === p) {
         uNum = i;
         break;
       }
@@ -215,8 +211,7 @@ export class EditorService {
         str = this.model.para[p].charAt(k);
         div += str;
         str = '';
-      }
-      else {
+      } else {
 
         if (tag === 'b')
           s = "<b>";
@@ -225,7 +220,7 @@ export class EditorService {
         else if (tag === 'u')
           s = "<u>";
 
-        for (let t = k; t<= text[num][2]; t++) {
+        for (let t = k; t <= text[num][2]; t++) {
           biuStr += this.model.para[p].charAt(t);
         }
 
@@ -256,8 +251,8 @@ export class EditorService {
     let linkNum = -1;
     let a = '';
 
-    for(let i=0; i<this.model.link.length; i++) {
-      if(this.model.link[i][0] === p) {
+    for (let i = 0; i < this.model.link.length; i++) {
+      if (this.model.link[i][0] === p) {
         linkNum = i;
         break;
       }
@@ -265,7 +260,7 @@ export class EditorService {
 
     if (linkNum > -1) {
 
-      a = '<a href="'+this.model.link[linkNum][1]+'"/>';
+      a = '<a href="' + this.model.link[linkNum][1] + '"/>';
 
       a += this.model.para[p];
 
@@ -278,19 +273,19 @@ export class EditorService {
   // 리스트 렌더링
   renderingList(p) {
 
-    let tag ='';
+    let tag = '';
     let orderNum = -1;
     let unOrderNum = -1;
 
-    for(let i=0; i<this.model.orderList.length; i++) {
-      if(this.model.orderList[i][0] === p) {
+    for (let i = 0; i < this.model.orderList.length; i++) {
+      if (this.model.orderList[i][0] === p) {
         orderNum = i;
         break;
       }
     }
 
-    for(let i=0; i<this.model.unOrderList.length; i++) {
-      if(this.model.unOrderList[i][0] === p) {
+    for (let i = 0; i < this.model.unOrderList.length; i++) {
+      if (this.model.unOrderList[i][0] === p) {
         unOrderNum = i;
         break;
       }
@@ -337,16 +332,26 @@ export class EditorService {
   btnsEdit(id) {
 
     switch (id) {
-      case 'left': return 'justifyLeft';
-      case 'center': return 'justifyCenter';
-      case 'right': return 'justifyRight';
-      case 'bold': return 'bold';
-      case 'italic': return 'italic';
-      case 'underline': return 'underline';
-      case 'orderList': return 'insertOrderedList';
-      case 'unOrderList': return 'insertUnorderedList';
-      case 'link': return 'link';
-      case 'insertImage': return 'insertImage';
+      case 'left':
+        return 'justifyLeft';
+      case 'center':
+        return 'justifyCenter';
+      case 'right':
+        return 'justifyRight';
+      case 'bold':
+        return 'bold';
+      case 'italic':
+        return 'italic';
+      case 'underline':
+        return 'underline';
+      case 'orderList':
+        return 'insertOrderedList';
+      case 'unOrderList':
+        return 'insertUnorderedList';
+      case 'link':
+        return 'link';
+      case 'insertImage':
+        return 'insertImage';
     }
 
   }
@@ -359,32 +364,29 @@ export class EditorService {
     let endBoldIndexArray = [];
 
     // 새로고침하고나면 이상하게 paraArray[0]에 빈값이 생성됨
-    if(paraArray[0] === '') {
+    if (paraArray[0] === '') {
       paraArray.shift();
     }
 
     paraArray.forEach((value, index) => {
 
-      let biu = value.match("(?<=\<"+tag+">)(.*?)(?=<\/"+tag+">)");
+      let biu = value.match("(?<=\<" + tag + ">)(.*?)(?=<\/" + tag + ">)");
 
       if (biu != null) {
 
         indexArray.push(index);
         if (value.includes("left;\">")) {
-          startBoldIndexArray.push(value.indexOf("<"+tag+">")-7);
-          endBoldIndexArray.push(value.indexOf("</"+tag+">")-11);
-        }
-        else if(value.includes("right;\">")) {
-          startBoldIndexArray.push(value.indexOf("<"+tag+">")-8);
-          endBoldIndexArray.push(value.indexOf("</"+tag+">")-12);
-        }
-        else if(value.includes("center;\">")) {
-          startBoldIndexArray.push(value.indexOf("<"+tag+">")-9);
-          endBoldIndexArray.push(value.indexOf("</"+tag+">")-13);
-        }
-        else {
-          startBoldIndexArray.push(value.indexOf("<"+tag+">"));
-          endBoldIndexArray.push(value.indexOf("</"+tag+">")-4);
+          startBoldIndexArray.push(value.indexOf("<" + tag + ">") - 7);
+          endBoldIndexArray.push(value.indexOf("</" + tag + ">") - 11);
+        } else if (value.includes("right;\">")) {
+          startBoldIndexArray.push(value.indexOf("<" + tag + ">") - 8);
+          endBoldIndexArray.push(value.indexOf("</" + tag + ">") - 12);
+        } else if (value.includes("center;\">")) {
+          startBoldIndexArray.push(value.indexOf("<" + tag + ">") - 9);
+          endBoldIndexArray.push(value.indexOf("</" + tag + ">") - 13);
+        } else {
+          startBoldIndexArray.push(value.indexOf("<" + tag + ">"));
+          endBoldIndexArray.push(value.indexOf("</" + tag + ">") - 4);
         }
       }
 
@@ -401,7 +403,7 @@ export class EditorService {
 
     if (paraIndexArray.length !== 0 && startIndexArray.length !== 0 && endIndexArray.length !== 0) {
 
-      for (let i=0; i<paraIndexArray.length; i++) {
+      for (let i = 0; i < paraIndexArray.length; i++) {
         array[i] = [paraIndexArray[i], startIndexArray[i], endIndexArray[i]];
       }
 
@@ -419,7 +421,7 @@ export class EditorService {
     let liArray = [];
 
     // 새로고침하고나면 이상하게 paraArray[0]에 빈값이 생성됨
-    if(paraArray[0] === '') {
+    if (paraArray[0] === '') {
       paraArray.shift();
     }
 
@@ -435,13 +437,12 @@ export class EditorService {
         if (value.includes("</ol>") || value.includes("</ul>")) {
           ind.push(index);
           liIndexArray.push(ind[0]);
-          liIndexArray.push(ind[ind.length-1]);
+          liIndexArray.push(ind[ind.length - 1]);
           liArray.push(liIndexArray);
 
           ind = [];
           liIndexArray = [];
-        }
-        else {
+        } else {
           ind.push(index);
         }
 
@@ -459,13 +460,13 @@ export class EditorService {
     let ind = [];
 
     // 새로고침하고나면 이상하게 paraArray[0]에 빈값이 생성됨
-    if(paraArray[0] === '') {
+    if (paraArray[0] === '') {
       paraArray.shift();
     }
 
     paraArray.forEach((value, index) => {
 
-      if (value.includes(align+";\">")) {
+      if (value.includes(align + ";\">")) {
 
         ind.push(index);
 
@@ -483,7 +484,7 @@ export class EditorService {
     let ind = [];
     let href = [];
 
-    if(paraArray[0] === '') {
+    if (paraArray[0] === '') {
       paraArray.shift();
     }
 
@@ -507,7 +508,7 @@ export class EditorService {
 
     if (indArray.length !== 0 && hrefArray.length !== 0) {
 
-      for (let i=0; i<hrefArray.length; i++) {
+      for (let i = 0; i < hrefArray.length; i++) {
         array[i] = [indArray[i], hrefArray[i]];
       }
 
