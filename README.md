@@ -47,7 +47,7 @@ graph TD;
 1. 구동 전 필요한 절차
 ```
 // 필요한 npm 설치
-npm install
+npm i
 
 // parcel build index.html 진행
 npm run bulid

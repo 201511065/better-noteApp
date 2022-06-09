@@ -1,4 +1,3 @@
-
 export class EditorView {
 
   constructor() {
@@ -37,8 +36,8 @@ export class EditorView {
     this.editor.contentEditable = true;
 
     this.btns.append(this.leftButton, this.centerButton, this.rightButton, this.boldButton
-                    , this.italicButton, this.underlineButton, this.orderListButton, this.unOrderListButton,this.linkButton);
-                    //, this.insertImageButton, this.imgFile
+      , this.italicButton, this.underlineButton, this.orderListButton, this.unOrderListButton, this.linkButton);
+    //, this.insertImageButton, this.imgFile
 
     this.app.append(this.btns, this.editor);
 
@@ -138,7 +137,7 @@ export class EditorView {
   }
 
   inputDocument(handler, biuHandler
-              , listHandler, alignHandler, linkHandler) {
+    , listHandler, alignHandler, linkHandler) {
 
     this.editor.addEventListener('keydown', () => {
 
@@ -164,12 +163,12 @@ export class EditorView {
 
   saveModel(handler) {
 
-    if(this._document) {
+    if (this._document) {
       handler({
-        document : {
-          para : this._document.para,
-          bold : this._document.bold,
-          italic : this._document.italic,
+        document: {
+          para: this._document.para,
+          bold: this._document.bold,
+          italic: this._document.italic,
           underLine: this._document.underLine,
           orderList: this._document.orderList,
           unOrderList: this._document.unOrderList,
