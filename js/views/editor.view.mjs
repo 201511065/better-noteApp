@@ -33,16 +33,6 @@ export class EditorView {
     this.linkButton = this.createElement('button', 'link');
     this.linkButton.append(this.createElement('img', false, './img/link.png'));
 
-    // this.insertImageButton = this.createElement('button', 'insertImage');
-    // this.insertImageButton.append(this.createElement('img', false, './img/image.png'));
-
-    // this.createInput({
-    //   key: 'imgFile',
-    //   id: 'imgFile',
-    //   type: 'file',
-    //   accept: 'image/*'
-    // })
-
     this.editor = this.createElement('div', 'textField', false);
     this.editor.contentEditable = true;
 
@@ -64,7 +54,8 @@ export class EditorView {
     this.rightAlign = [];
     this.centerAlign = [];
     this.link = [];
-    //this.img = [];
+
+    this.preventEvent();
 
   }
 
@@ -75,20 +66,6 @@ export class EditorView {
     if (src) element.setAttribute('src', src);
 
     return element;
-  }
-
-  createInput(
-    { key, id, type, accept} = {
-      key: 'default',
-      id: 'default',
-      type: 'file',
-      accept: 'image/*'
-    }
-  ) {
-    this[key] = this.createElement('input');
-    this[key].id = id;
-    this[key].type = type;
-    this[key].accept = accept;
   }
 
   getElement(selector) {
@@ -108,10 +85,7 @@ export class EditorView {
         if (handler(id) === 'link') {
           this.addLink().catch(e => console.log(e));
         }
-        // if (handler(id) === 'insertImage') {
-        //   this.imgFile.click();
-        //   this.setImage();
-        // }
+
         this.setStyle(handler(id));
 
       });
@@ -150,6 +124,19 @@ export class EditorView {
       .split("<div>")
   }
 
+  preventEvent() {
+    window.addEventListener("copy", e => {
+      alert("복사 및 붙여넣기 금지");
+      e.preventDefault();
+      e.clipboardData.clearData("Text");
+    })
+    window.addEventListener("paste", e => {
+      alert("복사 및 붙여넣기 금지");
+      e.preventDefault();
+      e.clipboardData.clearData("Text");
+    })
+  }
+
   inputDocument(handler, biuHandler
               , listHandler, alignHandler, linkHandler) {
 
@@ -167,7 +154,6 @@ export class EditorView {
       this.rightAlign = alignHandler(this.paraArrayToTag, 'right');
       this.centerAlign = alignHandler(this.paraArrayToTag, 'center');
       this.link = linkHandler(this.paraArrayToTag);
-      //this.img = imgHandler(this.paraArrayToTag);
 
       // model 저장
       this.saveModel(handler);
@@ -236,42 +222,6 @@ export class EditorView {
       });
 
     });
-
-  }
-
-  // 이미지 넣기
-  setImage() {
-
-    this.imgFile.addEventListener('change', ev => {
-
-      const files = ev.currentTarget.files;
-
-      if(!!files) {
-        this.insertImgData(files[0]);
-      }
-
-      // 같은 이미지 넣을수 있도록
-      // 이미지 넣을수록 계속 증가됨을 방지 초기화
-      ev.target.value = '';
-
-    });
-
-  }
-
-  insertImgData(file) {
-
-    if(file) {
-
-      const reader = new FileReader();
-
-      reader.addEventListener('load', () => {
-        this.focusEditor();
-        document.execCommand('insertImage', false, `${reader.result}`);
-      });
-
-      reader.readAsDataURL(file);
-
-    }
 
   }
 
