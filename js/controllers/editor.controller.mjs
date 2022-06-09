@@ -4,11 +4,12 @@ export class EditorController {
     this.editorService = editorService;
     this.editorView = editorView;
 
-    this.editorView.bindBtnsEdit(this.handleBtnsEdit);
-    this.editorView.inputDocument(this.setText, this.handelIndexBIU,
+    this.editorView.btnsEditDocument(this.handleBtnsEdit);
+    this.editorView.editDocument(this.setText, this.handelIndexBIU,
       this.handleIndexList, this.handleIndexAlign
       , this.handleIndexLink);
     this.editorView.renderingText(this.handleRendering());
+
   }
 
   // 실시간 문자 받아서 모델, 로컬스토리지에 저장하기
@@ -17,7 +18,7 @@ export class EditorController {
   }
 
   handleRendering() {
-    return this.editorService.rendering()
+    return this.editorService.rendering();
   }
 
   handleBtnsEdit = id => {

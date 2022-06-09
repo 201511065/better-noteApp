@@ -1,43 +1,21 @@
 export class EditorView {
 
   constructor() {
+
     this.app = this.getElement('.wrapper');
 
     this.btns = this.getElement('.btns');
 
-    this.leftButton = this.createElement('button', 'left');
-    this.leftButton.append(this.createElement('img', false, './img/left.png'));
-
-    this.centerButton = this.createElement('button', 'center');
-    this.centerButton.append(this.createElement('img', false, './img/center.png'));
-
-    this.rightButton = this.createElement('button', 'right');
-    this.rightButton.append(this.createElement('img', false, './img/right.png'));
-
-    this.boldButton = this.createElement('button', 'bold');
-    this.boldButton.append(this.createElement('img', false, './img/bold.png'));
-
-    this.italicButton = this.createElement('button', 'italic');
-    this.italicButton.append(this.createElement('img', false, './img/italic.png'));
-
-    this.underlineButton = this.createElement('button', 'underline');
-    this.underlineButton.append(this.createElement('img', false, './img/underline.png'));
-
-    this.orderListButton = this.createElement('button', 'orderList');
-    this.orderListButton.append(this.createElement('img', false, './img/orderList.png'));
-
-    this.unOrderListButton = this.createElement('button', 'unOrderList');
-    this.unOrderListButton.append(this.createElement('img', false, './img/nonOrderList.png'));
-
-    this.linkButton = this.createElement('button', 'link');
-    this.linkButton.append(this.createElement('img', false, './img/link.png'));
+    this.createButtonAlign();
+    this.createButtonBIU();
+    this.createButtonList();
+    this.createButtonLink();
 
     this.editor = this.createElement('div', 'textField', false);
     this.editor.contentEditable = true;
 
     this.btns.append(this.leftButton, this.centerButton, this.rightButton, this.boldButton
       , this.italicButton, this.underlineButton, this.orderListButton, this.unOrderListButton, this.linkButton);
-    //, this.insertImageButton, this.imgFile
 
     this.app.append(this.btns, this.editor);
 
@@ -58,6 +36,49 @@ export class EditorView {
 
   }
 
+  createButtonAlign() {
+
+    this.leftButton = this.createElement('button', 'left');
+    this.leftButton.append(this.createElement('img', false, './img/left.png'));
+
+    this.centerButton = this.createElement('button', 'center');
+    this.centerButton.append(this.createElement('img', false, './img/center.png'));
+
+    this.rightButton = this.createElement('button', 'right');
+    this.rightButton.append(this.createElement('img', false, './img/right.png'));
+
+  }
+
+  createButtonBIU() {
+
+    this.boldButton = this.createElement('button', 'bold');
+    this.boldButton.append(this.createElement('img', false, './img/bold.png'));
+
+    this.italicButton = this.createElement('button', 'italic');
+    this.italicButton.append(this.createElement('img', false, './img/italic.png'));
+
+    this.underlineButton = this.createElement('button', 'underline');
+    this.underlineButton.append(this.createElement('img', false, './img/underline.png'));
+
+  }
+
+  createButtonList() {
+
+    this.orderListButton = this.createElement('button', 'orderList');
+    this.orderListButton.append(this.createElement('img', false, './img/orderList.png'));
+
+    this.unOrderListButton = this.createElement('button', 'unOrderList');
+    this.unOrderListButton.append(this.createElement('img', false, './img/nonOrderList.png'));
+
+  }
+
+  createButtonLink() {
+
+    this.linkButton = this.createElement('button', 'link');
+    this.linkButton.append(this.createElement('img', false, './img/link.png'));
+
+  }
+
   createElement(tag, id, src) {
     const element = document.createElement(tag);
 
@@ -75,7 +96,7 @@ export class EditorView {
     return document.querySelectorAll(selector);
   }
 
-  bindBtnsEdit(handler) {
+  btnsEditDocument(handler) {
     this.buttonAll.forEach(value => {
       value.addEventListener('click', ev => {
 
@@ -91,8 +112,8 @@ export class EditorView {
     });
   }
 
-  get _document() {
-    const document = {
+  get #document() {
+    return {
       para: this.para,
       bold: this.bold,
       italic: this.italic,
@@ -103,13 +124,10 @@ export class EditorView {
       rightAlign: this.rightAlign,
       centerAlign: this.centerAlign,
       link: this.link
-    }
-
-    return document;
+    };
   }
 
-  // 스트링을 배열로 저장
-  savePara() {
+  saveParaArray() {
     this.para = this.editor.innerText.split("\n");
   }
 
@@ -136,13 +154,12 @@ export class EditorView {
     })
   }
 
-  inputDocument(handler, biuHandler
+  editDocument(handler, biuHandler
     , listHandler, alignHandler, linkHandler) {
 
     this.editor.addEventListener('keydown', () => {
 
-      // 엔터기준으로 문자열 저장하기
-      this.savePara();
+      this.saveParaArray();
 
       this.bold = biuHandler(this.paraArrayToTag, 'b');
       this.italic = biuHandler(this.paraArrayToTag, 'i');
@@ -154,7 +171,6 @@ export class EditorView {
       this.centerAlign = alignHandler(this.paraArrayToTag, 'center');
       this.link = linkHandler(this.paraArrayToTag);
 
-      // model 저장
       this.saveModel(handler);
 
     });
@@ -163,29 +179,29 @@ export class EditorView {
 
   saveModel(handler) {
 
-    if (this._document) {
+    if (this.#document) {
       handler({
         document: {
-          para: this._document.para,
-          bold: this._document.bold,
-          italic: this._document.italic,
-          underLine: this._document.underLine,
-          orderList: this._document.orderList,
-          unOrderList: this._document.unOrderList,
-          leftAlign: this._document.leftAlign,
-          rightAlign: this._document.rightAlign,
-          centerAlign: this._document.centerAlign,
-          link: this._document.link
+          para: this.#document.para,
+          bold: this.#document.bold,
+          italic: this.#document.italic,
+          underLine: this.#document.underLine,
+          orderList: this.#document.orderList,
+          unOrderList: this.#document.unOrderList,
+          leftAlign: this.#document.leftAlign,
+          rightAlign: this.#document.rightAlign,
+          centerAlign: this.#document.centerAlign,
+          link: this.#document.link
         }
       });
     }
 
   }
 
-  // 데이터 렌더링
   renderingText(handler) {
 
     document.addEventListener('DOMContentLoaded', evt => {
+
       evt.preventDefault();
       let doc = new DOMParser().parseFromString(handler, "text/html");
 
@@ -195,7 +211,6 @@ export class EditorView {
 
   }
 
-  // 하이퍼링크 생성
   async addLink() {
 
     this.focusEditor();
@@ -239,7 +254,6 @@ export class EditorView {
 
   }
 
-  // 에디터에서 포커스 날아가는것을 방지
   focusEditor() {
     this.editor.focus({preventScroll: true});
   }
