@@ -2,6 +2,7 @@ import {DocumentModel} from "../models/document.model.mjs";
 
 export class EditorService {
   constructor(documentData) {
+
     let document;
     if (documentData) {
       document = documentData
@@ -9,18 +10,16 @@ export class EditorService {
       document = JSON.parse(localStorage.getItem('_document')) || [];
     }
 
-    this.model = new DocumentModel(document._para, document._bold, document._italic, document._underLine,
-      document._leftAlign, document._rightAlign, document._centerAlign,
-      document._orderList, document._unOrderList, document._link);
+    this.model = new DocumentModel(document.docPara, document.docBold, document.docItalic, document.docUnderLine,
+      document.docLeftAlign, document.docRightAlign, document.docCenterAlign,
+      document.docOrderList, document.docUnOrderList, document.docLink);
 
   }
 
-  // 로컬스토리지에 저장
-  _commit(model) {
+  #commit(model) {
     localStorage.setItem("_document", JSON.stringify(model));
   }
 
-  // 모델에 저장
   addTextToModel(ts) {
     this.model.para = ts.document.para;
     this.model.bold = ts.document.bold;
@@ -32,6 +31,14 @@ export class EditorService {
     this.model.orderList = ts.document.orderList;
     this.model.unOrderList = ts.document.unOrderList;
     this.model.link = ts.document.link;
+
+    this.#commit(this.model);
+  }
+
+  rendering() {
+
+    let rootDiv = '';
+    let div = "<div>";
 
     if (this.model.para === undefined) {
       this.model.para = [];
@@ -63,14 +70,6 @@ export class EditorService {
     if (this.model.link === undefined) {
       this.model.link = [];
     }
-
-    this._commit(this.model);
-  }
-
-  rendering() {
-
-    let rootDiv = '';
-    let div = "<div>";
 
     if (this.model) {
 
@@ -117,7 +116,6 @@ export class EditorService {
     return rootDiv;
   }
 
-  // 왼, 오, 가운데 정렬 렌더링
   renderingAlign(div, p) {
 
     let leftNum = -1;
@@ -251,7 +249,6 @@ export class EditorService {
 
   }
 
-  // 링크 렌더링
   renderingLink(p) {
     let linkNum = -1;
     let a = '';
@@ -265,17 +262,17 @@ export class EditorService {
 
     if (linkNum > -1) {
 
-      a = '<a href="' + this.model.link[linkNum][1] + '"/>';
+      a = '<a href="' + this.model.link[linkNum][1] + '">';
 
       a += this.model.para[p];
 
+      a += '</a>'
     }
 
     return a;
 
   }
 
-  // 리스트 렌더링
   renderingList(p) {
 
     let tag = '';
@@ -361,14 +358,13 @@ export class EditorService {
 
   }
 
-  // bold, italic, underline 인덱스 구하기
   indexToBIU(paraArray, tag) {
 
     let indexArray = [];
     let startBoldIndexArray = [];
     let endBoldIndexArray = [];
 
-    // 새로고침하고나면 이상하게 paraArray[0]에 빈값이 생성됨
+    // 새로고침하고나면 paraArray[0]에 빈값이 생성됨
     if (paraArray[0] === '') {
       paraArray.shift();
     }
@@ -401,7 +397,6 @@ export class EditorService {
 
   }
 
-  // 태그 b, i, u index 저장하기
   saveIndexByTag(paraIndexArray, startIndexArray, endIndexArray) {
 
     let array = [];
@@ -418,7 +413,6 @@ export class EditorService {
 
   }
 
-  // 숫자, 점 리스트 인덱스 저장
   indexToList(paraArray, tag) {
 
     let liIndexArray = [];
@@ -459,7 +453,6 @@ export class EditorService {
 
   }
 
-  // 왼, 오, 가운데 정렬 인덱스 저장
   indexToAlign(paraArray, align) {
 
     let ind = [];
@@ -483,7 +476,6 @@ export class EditorService {
 
   }
 
-  // 링크 인덱스, url 저장
   indexToLink(paraArray) {
 
     let ind = [];
