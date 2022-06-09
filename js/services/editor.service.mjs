@@ -17,8 +17,8 @@ export class EditorService {
 
   // 모델에 저장
   addTextToModel(ts) {
-    this.model.bold = ts.document.bold;
     this.model.para = ts.document.para;
+    this.model.bold = ts.document.bold;
     this.model.italic = ts.document.italic;
     this.model.underLine = ts.document.underLine;
     this.model.leftAlign = ts.document.leftAlign;
@@ -27,12 +27,6 @@ export class EditorService {
     this.model.orderList = ts.document.orderList;
     this.model.unOrderList = ts.document.unOrderList;
     this.model.link = ts.document.link;
-
-    this._commit(this.model);
-  }
-
-  // 모델에 저장된 text 가져오기
-  getModelText() {
 
     if (this.model.para === undefined) {
       this.model.para = [];
@@ -65,10 +59,7 @@ export class EditorService {
       this.model.link = [];
     }
 
-    //this.rendering();
-    return this.model;
-    //console.log(JSON.parse(localStorage.getItem('_document')));
-    //return JSON.parse(localStorage.getItem('_document'));
+    this._commit(this.model);
   }
 
   rendering() {

@@ -8,7 +8,6 @@ export class EditorController {
     this.editorView.inputDocument(this.setText, this.handelIndexBIU,
       this.handleIndexList, this.handleIndexAlign
       , this.handleIndexLink);
-    //this.editorView.renderingTextEvent(this.getText());
     this.editorView.renderingText(this.handleRendering());
   }
 
@@ -19,11 +18,6 @@ export class EditorController {
 
   handleRendering() {
     return this.editorService.rendering()
-  }
-
-  // 값 가져오기
-  getText() {
-    return this.editorService.getModelText();
   }
 
   handleBtnsEdit = id => {
