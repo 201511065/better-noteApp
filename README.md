@@ -11,7 +11,7 @@
     - mocha 프레임워크 사용
 
 ## 2. 개발 환경 구성
-    - https://html5boilerplate.com/ 사용
+https://html5boilerplate.com/  사용
 
 ## 3. 설계
   - 모듈 의존성 다이어그램 (ESM)
@@ -46,8 +46,13 @@ graph TD;
 ## 5. Usage
 1. 구동 전 필요한 절차
 ```
+// 필요한 npm 설치
 npm install
+
+// parcel build index.html 진행
 npm run bulid
+
+// index.html start
 npm run dev
 ```
 3. Unit Test 실행 방법
