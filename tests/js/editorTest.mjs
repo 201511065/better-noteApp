@@ -8,16 +8,16 @@ const paraArray = ['right;">?????', 'center;">hihihi', 'm<b>yname</b>', '<b>is</
 
 const s = new EditorService(
   {
-    _para: ['0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', 'www.naver.com'],
-    _bold: [[8, 0, 5], [17, 3, 7]],
-    _italic: [[0, 2, 5], [5, 0, 6], [12, 0, 2], [18, 0, 5]],
-    _underLine: [[4, 6, 8], [9, 0, 5], [16, 1, 5]],
-    _orderList: [[1, 3], [6, 7]],
-    _unOrderList: [[10, 11], [13, 15]],
-    _leftAlign: [17, 18],
-    _rightAlign: [12],
-    _centerAlign: [16],
-    _link: [[19, 'https://www.naver.com']]
+    docPara: ['0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', '0123456789', 'www.naver.com'],
+    docBold: [[8, 0, 5], [17, 3, 7]],
+    docItalic: [[0, 2, 5], [5, 0, 6], [12, 0, 2], [18, 0, 5]],
+    docUnderLine: [[4, 6, 8], [9, 0, 5], [16, 1, 5]],
+    docOrderList: [[1, 3], [6, 7]],
+    docUnOrderList: [[10, 11], [13, 15]],
+    docLeftAlign: [17, 18],
+    docRightAlign: [12],
+    docCenterAlign: [16],
+    docLink: [[19, 'https://www.naver.com']]
   }
 );
 
@@ -102,7 +102,7 @@ describe("렌더링이 제대로 되는지 확인한다.", () => {
     // 19
     assert.deepEqual(s.renderingLink(10), '');
     assert.deepEqual(s.renderingLink(11), '');
-    assert.deepEqual(s.renderingLink(19), '<a href="https://www.naver.com"/>www.naver.com');
+    assert.deepEqual(s.renderingLink(19), '<a href="https://www.naver.com">www.naver.com</a>');
 
     done();
 
