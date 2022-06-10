@@ -17,7 +17,7 @@ https://html5boilerplate.com/  사용
   - 모듈 의존성 다이어그램 (ESM)
 ```mermaid
 graph TD;
-    main.js-->editor.controller;
+    main.mjs-->editor.controller;
     editor.controller-->editor.service;
     editor.controller-->editor.view;
     editor.service-->localStorage;

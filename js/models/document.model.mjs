@@ -3,95 +3,95 @@ export class DocumentModel {
   constructor(para, bold, italic, underLine,
               leftAlign, rightAlign, centerAlign,
               orderList, unOrderList, link) {
-    this._para = para;
-    this._bold = bold;
-    this._italic = italic;
-    this._underLine = underLine;
-    this._leftAlign = leftAlign;
-    this._rightAlign = rightAlign;
-    this._centerAlign = centerAlign;
-    this._orderList = orderList;
-    this._unOrderList = unOrderList;
-    this._link = link;
+    this.docPara = para;
+    this.docBold = bold;
+    this.docItalic = italic;
+    this.docUnderLine = underLine;
+    this.docLeftAlign = leftAlign;
+    this.docRightAlign = rightAlign;
+    this.docCenterAlign = centerAlign;
+    this.docOrderList = orderList;
+    this.docUnOrderList = unOrderList;
+    this.docLink = link;
   }
 
   get para() {
-    return this._para;
+    return this.docPara;
   }
 
   set para(value) {
-    this._para = value;
+    this.docPara = value;
   }
 
   get bold() {
-    return this._bold;
+    return this.docBold;
   }
 
   set bold(value) {
-    this._bold = value;
+    this.docBold = value;
   }
 
   get italic() {
-    return this._italic;
+    return this.docItalic;
   }
 
   set italic(value) {
-    this._italic = value;
+    this.docItalic = value;
   }
 
   get underLine() {
-    return this._underLine;
+    return this.docUnderLine;
   }
 
   set underLine(value) {
-    this._underLine = value;
+    this.docUnderLine = value;
   }
 
   get leftAlign() {
-    return this._leftAlign;
+    return this.docLeftAlign;
   }
 
   set leftAlign(value) {
-    this._leftAlign = value;
+    this.docLeftAlign = value;
   }
 
   get rightAlign() {
-    return this._rightAlign;
+    return this.docRightAlign;
   }
 
   set rightAlign(value) {
-    this._rightAlign = value;
+    this.docRightAlign = value;
   }
 
   get centerAlign() {
-    return this._centerAlign;
+    return this.docCenterAlign;
   }
 
   set centerAlign(value) {
-    this._centerAlign = value;
+    this.docCenterAlign = value;
   }
 
   get orderList() {
-    return this._orderList;
+    return this.docOrderList;
   }
 
   set orderList(value) {
-    this._orderList = value;
+    this.docOrderList = value;
   }
 
   get unOrderList() {
-    return this._unOrderList;
+    return this.docUnOrderList;
   }
 
   set unOrderList(value) {
-    this._unOrderList = value;
+    this.docUnOrderList = value;
   }
 
   get link() {
-    return this._link;
+    return this.docLink;
   }
 
   set link(value) {
-    this._link = value;
+    this.docLink = value;
   }
 };
