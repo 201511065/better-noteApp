@@ -46,7 +46,7 @@ graph TD;
 ## 5. Usage
 1. 구동 전 필요한 절차
 ```
-// 필요한 npm 설치
+// 필요한 라이브러리 설치
 npm i
 
 // parcel build index.html 진행
